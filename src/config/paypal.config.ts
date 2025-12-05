@@ -9,12 +9,20 @@ const paypal: any = require("@paypal/checkout-server-sdk");
 
 let environment: any;
 
-if (config.paypal.mode === "production") {
+if (config.paypal.mode === "production" || config.paypal.mode === "live") {
+  console.log("🚀 Initializing PayPal LIVE Environment");
+  console.log(
+    `🔑 Client ID (Masked): ${config.paypal.clientId.substring(0, 4)}...${config.paypal.clientId.substring(config.paypal.clientId.length - 4)}`
+  );
   environment = new paypal.core.LiveEnvironment(
     config.paypal.clientId,
     config.paypal.clientSecret
   );
 } else {
+  console.log("🧪 Initializing PayPal SANDBOX Environment");
+  console.log(
+    `🔑 Client ID (Masked): ${config.paypal.clientId.substring(0, 4)}...${config.paypal.clientId.substring(config.paypal.clientId.length - 4)}`
+  );
   environment = new paypal.core.SandboxEnvironment(
     config.paypal.clientId,
     config.paypal.clientSecret

@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import path from 'path';
+import dotenv from "dotenv";
+import path from "path";
 
 // Load environment variables
 dotenv.config();
@@ -8,7 +8,7 @@ interface EnvConfig {
   nodeEnv: string;
   port: number;
   paypal: {
-    mode: 'sandbox' | 'production';
+    mode: "sandbox" | "production" | "live";
     clientId: string;
     clientSecret: string;
   };
@@ -38,32 +38,40 @@ const getEnvVarOptional = (key: string, defaultValue: string): string => {
 };
 
 export const config: EnvConfig = {
-  nodeEnv: getEnvVarOptional('NODE_ENV', 'development'),
-  port: parseInt(getEnvVarOptional('PORT', '3000'), 10),
-  
+  nodeEnv: getEnvVarOptional("NODE_ENV", "development"),
+  port: parseInt(getEnvVarOptional("PORT", "3000"), 10),
+
   paypal: {
-    mode: (getEnvVarOptional('PAYPAL_MODE', 'sandbox') as 'sandbox' | 'production'),
-    clientId: getEnvVar('PAYPAL_CLIENT_ID', 'PLACEHOLDER_CLIENT_ID'),
-    clientSecret: getEnvVar('PAYPAL_CLIENT_SECRET', 'PLACEHOLDER_CLIENT_SECRET'),
+    mode: getEnvVarOptional("PAYPAL_MODE", "sandbox") as
+      | "sandbox"
+      | "production"
+      | "live",
+    clientId: getEnvVar("PAYPAL_CLIENT_ID", "PLACEHOLDER_CLIENT_ID"),
+    clientSecret: getEnvVar(
+      "PAYPAL_CLIENT_SECRET",
+      "PLACEHOLDER_CLIENT_SECRET"
+    ),
   },
-  
+
   cors: {
     allowedOrigins: getEnvVarOptional(
-      'ALLOWED_ORIGINS',
-      'http://localhost:3000,http://localhost:5173'
-    ).split(',').map(origin => origin.trim()),
+      "ALLOWED_ORIGINS",
+      "http://localhost:3000,http://localhost:5173"
+    )
+      .split(",")
+      .map((origin) => origin.trim()),
   },
-  
+
   app: {
-    name: getEnvVarOptional('APP_NAME', 'PayPal Payment Server'),
-    url: getEnvVarOptional('APP_URL', 'http://localhost:3000'),
+    name: getEnvVarOptional("APP_NAME", "PayPal Payment Server"),
+    url: getEnvVarOptional("APP_URL", "http://localhost:3000"),
   },
-  
+
   registration: {
-    fee: parseFloat(getEnvVarOptional('REGISTRATION_FEE', '29.99')),
-    currency: getEnvVarOptional('CURRENCY', 'USD'),
+    fee: parseFloat(getEnvVarOptional("REGISTRATION_FEE", "29.99")),
+    currency: getEnvVarOptional("CURRENCY", "USD"),
   },
 };
 
-export const isDevelopment = config.nodeEnv === 'development';
-export const isProduction = config.nodeEnv === 'production';
+export const isDevelopment = config.nodeEnv === "development";
+export const isProduction = config.nodeEnv === "production";

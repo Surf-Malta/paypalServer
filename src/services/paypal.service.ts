@@ -58,11 +58,32 @@ export class PayPalService {
   /**
    * Capture payment for an approved order
    */
+  /**
+   * Capture payment for an approved order
+   */
   async captureOrder(orderId: string): Promise<PaymentCapture> {
-    const request = new paypal.orders.OrdersCaptureRequest(orderId);
-    request.requestBody({});
-
     try {
+      // First check if order is already captured
+      const orderDetails = await this.getOrderDetails(orderId);
+
+      if (orderDetails.status === "COMPLETED") {
+        console.log("Order already captured, returning existing details");
+        const capture = orderDetails.purchase_units[0].payments.captures[0];
+        return {
+          id: capture.id,
+          status: capture.status,
+          amount: parseFloat(capture.amount.value),
+          currency: capture.amount.currency_code,
+          payerId: orderDetails.payer?.payer_id,
+          payerEmail: orderDetails.payer?.email_address,
+          capturedAt: new Date(capture.create_time),
+        };
+      }
+
+      // If not captured, proceed with capture
+      const request = new paypal.orders.OrdersCaptureRequest(orderId);
+      request.requestBody({});
+
       const response = await paypalClient.execute(request);
       const capture = response.result.purchase_units[0].payments.captures[0];
 
@@ -77,6 +98,28 @@ export class PayPalService {
       };
     } catch (error: any) {
       console.error("PayPal Capture Order Error:", error);
+
+      // Handle specific error case where it might have been captured in a race condition
+      if (error.message && error.message.includes("ORDER_ALREADY_CAPTURED")) {
+        try {
+          const orderDetails = await this.getOrderDetails(orderId);
+          const capture = orderDetails.purchase_units[0].payments.captures[0];
+          return {
+            id: capture.id,
+            status: capture.status,
+            amount: parseFloat(capture.amount.value),
+            currency: capture.amount.currency_code,
+            payerId: orderDetails.payer?.payer_id,
+            payerEmail: orderDetails.payer?.email_address,
+            capturedAt: new Date(capture.create_time),
+          };
+        } catch (retryError) {
+          throw new Error(
+            `Failed to retrieve already captured order: ${error.message}`
+          );
+        }
+      }
+
       throw new Error(`Failed to capture PayPal order: ${error.message}`);
     }
   }
