@@ -1,5 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
-import { RegistrationRecord, UserRegistrationData } from '../types/payment.types';
+import { v4 as uuidv4 } from "uuid";
+import {
+  RegistrationRecord,
+  UserRegistrationData,
+} from "../types/payment.types";
 
 /**
  * Registration Service
@@ -21,7 +24,7 @@ class RegistrationService {
     currency: string
   ): Promise<RegistrationRecord> {
     const userId = uuidv4();
-    
+
     const registration: RegistrationRecord = {
       id: uuidv4(),
       userId,
@@ -31,8 +34,8 @@ class RegistrationService {
       phone: userData.phone,
       address: userData.address,
       paymentId,
-      paymentStatus: 'pending',
-      registrationStatus: 'pending',
+      paymentStatus: "pending",
+      registrationStatus: "pending",
       amount,
       currency,
       createdAt: new Date(),
@@ -50,36 +53,44 @@ class RegistrationService {
    */
   async completeRegistration(
     registrationId: string,
-    paymentStatus: 'completed' | 'failed'
+    paymentStatus: "completed" | "failed"
   ): Promise<RegistrationRecord> {
     const registration = this.registrations.get(registrationId);
-    
+
     if (!registration) {
-      throw new Error('Registration not found');
+      throw new Error("Registration not found");
     }
 
     registration.paymentStatus = paymentStatus;
-    registration.registrationStatus = paymentStatus === 'completed' ? 'active' : 'pending';
-    
-    if (paymentStatus === 'completed') {
+    registration.registrationStatus =
+      paymentStatus === "completed" ? "active" : "pending";
+
+    if (paymentStatus === "completed") {
       registration.completedAt = new Date();
     }
 
     this.registrations.set(registrationId, registration);
+    console.log(
+      `[${new Date().toISOString()}] Registration service updated map for ID: ${registrationId}`
+    );
     return registration;
   }
 
   /**
    * Get registration by ID
    */
-  async getRegistrationById(registrationId: string): Promise<RegistrationRecord | null> {
+  async getRegistrationById(
+    registrationId: string
+  ): Promise<RegistrationRecord | null> {
     return this.registrations.get(registrationId) || null;
   }
 
   /**
    * Get registration by user ID
    */
-  async getRegistrationByUserId(userId: string): Promise<RegistrationRecord | null> {
+  async getRegistrationByUserId(
+    userId: string
+  ): Promise<RegistrationRecord | null> {
     for (const registration of this.registrations.values()) {
       if (registration.userId === userId) {
         return registration;
@@ -91,7 +102,9 @@ class RegistrationService {
   /**
    * Get registration by email
    */
-  async getRegistrationByEmail(email: string): Promise<RegistrationRecord | null> {
+  async getRegistrationByEmail(
+    email: string
+  ): Promise<RegistrationRecord | null> {
     const registrationId = this.emailIndex.get(email.toLowerCase());
     if (!registrationId) {
       return null;
@@ -102,7 +115,9 @@ class RegistrationService {
   /**
    * Get registration by payment ID
    */
-  async getRegistrationByPaymentId(paymentId: string): Promise<RegistrationRecord | null> {
+  async getRegistrationByPaymentId(
+    paymentId: string
+  ): Promise<RegistrationRecord | null> {
     for (const registration of this.registrations.values()) {
       if (registration.paymentId === paymentId) {
         return registration;
@@ -119,30 +134,32 @@ class RegistrationService {
     updates: Partial<RegistrationRecord>
   ): Promise<RegistrationRecord> {
     const registration = this.registrations.get(registrationId);
-    
+
     if (!registration) {
-      throw new Error('Registration not found');
+      throw new Error("Registration not found");
     }
 
     const updatedRegistration = { ...registration, ...updates };
     this.registrations.set(registrationId, updatedRegistration);
-    
+
     return updatedRegistration;
   }
 
   /**
    * Cancel registration
    */
-  async cancelRegistration(registrationId: string): Promise<RegistrationRecord> {
+  async cancelRegistration(
+    registrationId: string
+  ): Promise<RegistrationRecord> {
     const registration = this.registrations.get(registrationId);
-    
+
     if (!registration) {
-      throw new Error('Registration not found');
+      throw new Error("Registration not found");
     }
 
-    registration.registrationStatus = 'cancelled';
+    registration.registrationStatus = "cancelled";
     this.registrations.set(registrationId, registration);
-    
+
     return registration;
   }
 
@@ -159,7 +176,7 @@ class RegistrationService {
   async getActiveRegistrationsCount(): Promise<number> {
     let count = 0;
     for (const registration of this.registrations.values()) {
-      if (registration.registrationStatus === 'active') {
+      if (registration.registrationStatus === "active") {
         count++;
       }
     }

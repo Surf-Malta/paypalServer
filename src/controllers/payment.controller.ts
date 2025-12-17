@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-import { paypalService } from '../services/paypal.service';
-import { registrationService } from '../services/registration.service';
-import { asyncHandler } from '../middleware/error.middleware';
-import { CreateOrderRequest, ApiResponse } from '../types/payment.types';
-import { PaymentError, NotFoundError } from '../middleware/error.middleware';
+import { Request, Response } from "express";
+import { paypalService } from "../services/paypal.service";
+import { registrationService } from "../services/registration.service";
+import { asyncHandler } from "../middleware/error.middleware";
+import { CreateOrderRequest, ApiResponse } from "../types/payment.types";
+import { PaymentError, NotFoundError } from "../middleware/error.middleware";
 
 /**
  * Payment Controller
@@ -28,7 +28,7 @@ export class PaymentController {
         orderData.userData,
         order.id,
         orderData.amount,
-        orderData.currency || 'USD'
+        orderData.currency || "USD"
       );
       registrationId = registration.id;
     }
@@ -41,7 +41,8 @@ export class PaymentController {
         amount: order.amount,
         currency: order.currency,
         registrationId,
-        approvalUrl: order.links?.find((link: any) => link.rel === 'approve')?.href,
+        approvalUrl: order.links?.find((link: any) => link.rel === "approve")
+          ?.href,
         links: order.links,
       },
     };
@@ -57,16 +58,32 @@ export class PaymentController {
     const { orderId } = req.params;
 
     // Capture the payment
+    console.log(
+      `[${new Date().toISOString()}] Starting captureOrder for orderId: ${orderId}`
+    );
     const capture = await paypalService.captureOrder(orderId);
+    console.log(
+      `[${new Date().toISOString()}] Finished captureOrder for orderId: ${orderId}, Status: ${capture.status}`
+    );
 
-    if (capture.status !== 'COMPLETED') {
-      throw new PaymentError('Payment capture failed', 'CAPTURE_FAILED');
+    if (capture.status !== "COMPLETED") {
+      throw new PaymentError("Payment capture failed", "CAPTURE_FAILED");
     }
 
     // Update registration status if exists
-    const registration = await registrationService.getRegistrationByPaymentId(orderId);
+    const registration =
+      await registrationService.getRegistrationByPaymentId(orderId);
     if (registration) {
-      await registrationService.completeRegistration(registration.id, 'completed');
+      console.log(
+        `[${new Date().toISOString()}] Updating registration status for ID: ${registration.id}`
+      );
+      await registrationService.completeRegistration(
+        registration.id,
+        "completed"
+      );
+      console.log(
+        `[${new Date().toISOString()}] Registration updated for ID: ${registration.id}`
+      );
     }
 
     const response: ApiResponse = {
@@ -109,28 +126,28 @@ export class PaymentController {
   handleWebhook = asyncHandler(async (req: Request, res: Response) => {
     const webhookEvent = req.body;
 
-    console.log('PayPal Webhook Event:', webhookEvent.event_type);
+    console.log("PayPal Webhook Event:", webhookEvent.event_type);
 
     // Handle different event types
     switch (webhookEvent.event_type) {
-      case 'PAYMENT.CAPTURE.COMPLETED':
+      case "PAYMENT.CAPTURE.COMPLETED":
         // Payment was captured successfully
         const captureId = webhookEvent.resource.id;
-        console.log('Payment captured:', captureId);
+        console.log("Payment captured:", captureId);
         break;
 
-      case 'PAYMENT.CAPTURE.DENIED':
+      case "PAYMENT.CAPTURE.DENIED":
         // Payment was denied
-        console.log('Payment denied');
+        console.log("Payment denied");
         break;
 
-      case 'PAYMENT.CAPTURE.REFUNDED':
+      case "PAYMENT.CAPTURE.REFUNDED":
         // Payment was refunded
-        console.log('Payment refunded');
+        console.log("Payment refunded");
         break;
 
       default:
-        console.log('Unhandled webhook event:', webhookEvent.event_type);
+        console.log("Unhandled webhook event:", webhookEvent.event_type);
     }
 
     // Always respond with 200 to acknowledge receipt

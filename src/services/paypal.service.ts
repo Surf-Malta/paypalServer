@@ -84,7 +84,13 @@ export class PayPalService {
       const request = new paypal.orders.OrdersCaptureRequest(orderId);
       request.requestBody({});
 
+      console.log(
+        `[${new Date().toISOString()}] calling paypalClient.execute for capture...`
+      );
       const response = await paypalClient.execute(request);
+      console.log(
+        `[${new Date().toISOString()}] paypalClient.execute returned.`
+      );
       const capture = response.result.purchase_units[0].payments.captures[0];
 
       return {
@@ -131,7 +137,13 @@ export class PayPalService {
     const request = new paypal.orders.OrdersGetRequest(orderId);
 
     try {
+      console.log(
+        `[${new Date().toISOString()}] calling paypalClient.execute for getOrderDetails...`
+      );
       const response = await paypalClient.execute(request);
+      console.log(
+        `[${new Date().toISOString()}] paypalClient.execute returned for getOrderDetails.`
+      );
       return response.result;
     } catch (error: any) {
       console.error("PayPal Get Order Error:", error);
