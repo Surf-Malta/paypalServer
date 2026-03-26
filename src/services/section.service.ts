@@ -43,8 +43,13 @@ class SectionService {
         }
       }
       this.initialized = true;
-    } catch (error) {
-      console.error("Failed to initialize SectionService:", error);
+    } catch (error: any) {
+      console.error("CRITICAL: SectionService Init Error:", {
+        message: error.message,
+        code: error.code,
+        path: this.filePath,
+        stack: error.stack
+      });
       throw error;
     }
   }
