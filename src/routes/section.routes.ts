@@ -14,6 +14,7 @@ router.get("/active", sectionController.getActiveSections);
 router.get("/", sectionController.getAllSections);
 router.post("/", sectionController.createSection);
 router.put("/reorder", sectionController.reorderSections);
+router.post("/:id/reset", sectionController.resetSection);
 router.put("/:id", sectionController.updateSection);
 router.delete("/:id", sectionController.deleteSection);
 

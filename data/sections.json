@@ -1,6 +1,6 @@
 [
   {
-    "id": "218f7264-81e8-4ec5-aada-199941fd5b97",
+    "id": "63057249-d920-47a0-a8e2-9349cc4bb562",
     "type": "hero",
     "name": "Hero Section",
     "order": 1,
@@ -15,13 +15,43 @@
         "Free to start",
         "No setup fees",
         "Go live in minutes"
+      ],
+      "mainCard": {
+        "title": "Manage & Ship",
+        "subtitle": "Handle orders with integrated logistics",
+        "imageUrl": "https://images.unsplash.com/photo-1687422808248-f807f4ea2a2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFsbCUyMGJ1c2luZXNzJTIwb3duZXIlMjBtYW4lMjBwYWNraW5nJTIwb3JkZXJzJTIwc21pbGV8ZW58MXx8fHwxNzcyNzE2NTUwfDA"
+      },
+      "revenueCard": {
+        "title": "Monthly Revenue",
+        "value": "€12,450",
+        "change": "+32%",
+        "orders": "148",
+        "customers": "89"
+      },
+      "maltaCard": {
+        "title": "Built for Malta",
+        "subtitle": "Local commerce, local solutions",
+        "imageUrl": "https://images.unsplash.com/photo-1675773680276-7e544248a111?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNYWx0YSUyMFZhbGxldHRhJTIwY29sb3JmdWwlMjBidWlsZGluZ3MlMjBhZXJpYWwlMjB2aWV3fGVufDF8fHx8MTc3MjcxNjU0Nnww"
+      },
+      "notifications": [
+        {
+          "type": "join",
+          "title": "New seller joined!",
+          "subtitle": "Valletta Crafts · just now",
+          "imageUrl": "https://images.unsplash.com/photo-1573495628363-7114730a4a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+        },
+        {
+          "type": "order",
+          "title": "New order received",
+          "subtitle": "€47.50 · Sliema delivery"
+        }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.198Z",
-    "updatedAt": "2026-03-26T18:47:30.368Z"
+    "createdAt": "2026-03-26T19:03:59.090Z",
+    "updatedAt": "2026-03-26T19:15:48.026Z"
   },
   {
-    "id": "fbcc03a7-208e-4422-b4cd-f6a79c1422e1",
+    "id": "a52fde8a-8f24-47ce-b70f-f7977466528a",
     "type": "stats",
     "name": "Stats Strip",
     "order": 2,
@@ -30,27 +60,31 @@
       "stats": [
         {
           "label": "Active Sellers",
-          "value": "500+"
+          "value": "500+",
+          "iconName": "Users"
         },
         {
           "label": "Products Listed",
-          "value": "50K+"
+          "value": "50K+",
+          "iconName": "Package"
         },
         {
           "label": "Satisfaction",
-          "value": "98%"
+          "value": "98%",
+          "iconName": "Star"
         },
         {
           "label": "Support",
-          "value": "24/7"
+          "value": "24/7",
+          "iconName": "Shield"
         }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.199Z",
-    "updatedAt": "2026-03-26T18:48:11.035Z"
+    "createdAt": "2026-03-26T19:03:59.092Z",
+    "updatedAt": "2026-03-26T19:03:59.092Z"
   },
   {
-    "id": "eab95e06-90b5-4a30-8027-58bc78af3ccd",
+    "id": "398445ed-3792-453d-816b-438a368822df",
     "type": "how-it-works",
     "name": "How It Works",
     "order": 3,
@@ -82,11 +116,11 @@
         }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.200Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.093Z",
+    "updatedAt": "2026-03-26T19:03:59.093Z"
   },
   {
-    "id": "0dff805c-8078-45cc-9636-8b03b7ff25a9",
+    "id": "ff15f6b0-cdc3-4049-89ac-70406f78b2e7",
     "type": "features",
     "name": "Features Section",
     "order": 4,
@@ -164,11 +198,11 @@
         }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.207Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.107Z",
+    "updatedAt": "2026-03-26T19:03:59.107Z"
   },
   {
-    "id": "7c682464-e3e4-44b1-9bf1-16faef49f32b",
+    "id": "ae747973-d1cc-40cb-ac95-4948a7fd0cdb",
     "type": "mobile-app",
     "name": "Mobile App Banner",
     "order": 5,
@@ -178,16 +212,39 @@
       "title": "Your store in\nyour pocket",
       "subtitle": "Manage orders, track sales, and respond to customers on the go. The Surf Seller app puts your entire business at your fingertips.",
       "features": [
-        "Instant order notifications",
-        "Real-time sales dashboard",
-        "Quick product management"
-      ]
+        {
+          "iconName": "Bell",
+          "text": "Instant order notifications"
+        },
+        {
+          "iconName": "BarChart3",
+          "text": "Real-time sales dashboard"
+        },
+        {
+          "iconName": "Zap",
+          "text": "Quick product management"
+        }
+      ],
+      "mockup": {
+        "greeting": "Good morning",
+        "title": "Seller Dashboard",
+        "revenueTitle": "Today's Revenue",
+        "revenueValue": "€247.50",
+        "revenueChange": "+18% vs yesterday",
+        "notificationTitle": "New order #1084",
+        "notificationSubtitle": "€47.50 - 2 items",
+        "appBgImage": "https://images.unsplash.com/photo-1609162554108-6490759499ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+      },
+      "floatingNotification": {
+        "title": "Order shipped!",
+        "subtitle": "#1083 - Sliema"
+      }
     },
-    "createdAt": "2026-03-26T18:32:33.213Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.123Z",
+    "updatedAt": "2026-03-26T19:03:59.123Z"
   },
   {
-    "id": "a054d0d7-f9b5-4b0d-ab54-bf2d3214cd5b",
+    "id": "a83431cd-1312-43ac-ab50-c945d9e0994b",
     "type": "testimonials",
     "name": "Testimonials",
     "order": 6,
@@ -220,11 +277,11 @@
         }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.221Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.137Z",
+    "updatedAt": "2026-03-26T19:03:59.137Z"
   },
   {
-    "id": "8b3db0ef-f614-4c86-91fd-e4a1baf51d7a",
+    "id": "0ee7f479-9fe8-4809-bc7b-66a07fda40bf",
     "type": "faq",
     "name": "FAQ Section",
     "order": 7,
@@ -272,11 +329,11 @@
         }
       ]
     },
-    "createdAt": "2026-03-26T18:32:33.229Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.138Z",
+    "updatedAt": "2026-03-26T19:03:59.138Z"
   },
   {
-    "id": "4639f4b2-502c-4ecf-b852-58fbeb82603a",
+    "id": "a292300c-5d2e-4746-94ab-888dad6adbd1",
     "type": "get-started",
     "name": "Get Started Section",
     "order": 8,
@@ -287,7 +344,7 @@
       "primaryCta": "Start Selling Free",
       "footerNote": "No credit card required · Set up in under 5 minutes"
     },
-    "createdAt": "2026-03-26T18:32:33.237Z",
-    "updatedAt": "2026-03-26T18:46:57.777Z"
+    "createdAt": "2026-03-26T19:03:59.140Z",
+    "updatedAt": "2026-03-26T19:03:59.140Z"
   }
 ]

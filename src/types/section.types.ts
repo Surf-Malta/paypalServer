@@ -11,7 +11,7 @@ export type SectionType =
   | 'testimonials' 
   | 'faq' 
   | 'get-started'
-  | 'cta';
+  | 'footer';
 
 export interface Section {
   id: string;

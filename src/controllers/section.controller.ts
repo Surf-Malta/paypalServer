@@ -86,6 +86,22 @@ export const reorderSections = async (req: Request, res: Response) => {
   }
 };
 
+export const resetSection = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const section = await sectionService.resetSection(id);
+    res.status(200).json({
+      success: true,
+      data: section,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to reset section",
+    });
+  }
+};
+
 export const deleteSection = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

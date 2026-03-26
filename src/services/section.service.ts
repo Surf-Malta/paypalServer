@@ -1,7 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
-import { Section, CreateSectionDto, UpdateSectionDto } from "../types/section.types";
+import { Section, SectionType, CreateSectionDto, UpdateSectionDto } from "../types/section.types";
+import { initialSections } from "../config/defaultSections";
 
 /**
  * Section Service
@@ -21,8 +22,6 @@ class SectionService {
    * Initialize the service by loading data from JSON file
    */
   private async init() {
-    if (this.initialized) return;
-
     try {
       // Ensure data directory exists
       const dataDir = path.dirname(this.filePath);
@@ -34,9 +33,11 @@ class SectionService {
         this.sections = JSON.parse(data);
       } catch (error: any) {
         if (error.code === "ENOENT") {
-          // File doesn't exist, start with empty list or seed data
-          this.sections = [];
-          await this.save();
+          // File doesn't exist, start with empty list
+          if (!this.initialized) {
+            this.sections = [];
+            await this.save();
+          }
         } else {
           throw error;
         }
@@ -112,6 +113,34 @@ class SectionService {
     const updatedSection = {
       ...this.sections[index],
       ...dto,
+      updatedAt: new Date(),
+    };
+
+    this.sections[index] = updatedSection;
+    await this.save();
+    return updatedSection;
+  }
+
+  /**
+   * Reset a section to its default content
+   */
+  async resetSection(id: string): Promise<Section> {
+    await this.init();
+    const index = this.sections.findIndex((s) => s.id === id);
+    if (index === -1) {
+      throw new Error("Section not found");
+    }
+
+    const section = this.sections[index];
+    const defaultSection = initialSections.find((s) => s.type === section.type);
+    
+    if (!defaultSection) {
+      throw new Error(`No default content found for section type: ${section.type}`);
+    }
+
+    const updatedSection = {
+      ...section,
+      content: defaultSection.content,
       updatedAt: new Date(),
     };
 
