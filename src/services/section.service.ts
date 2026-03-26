@@ -122,6 +122,35 @@ class SectionService {
   }
 
   /**
+   * Create a section from a template
+   */
+  async createFromTemplate(type: SectionType): Promise<Section> {
+    await this.init();
+    const template = initialSections.find((s) => s.type === type);
+    if (!template) {
+      throw new Error(`Template not found for type: ${type}`);
+    }
+
+    // Find highest order to place it at the bottom
+    const maxOrder = this.sections.reduce((max, s) => Math.max(max, s.order), 0);
+
+    const newSection: Section = {
+      id: uuidv4(),
+      type: template.type,
+      name: `${template.name} (New)`,
+      order: maxOrder + 1,
+      isActive: true,
+      content: template.content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.sections.push(newSection);
+    await this.save();
+    return newSection;
+  }
+
+  /**
    * Reset a section to its default content
    */
   async resetSection(id: string): Promise<Section> {

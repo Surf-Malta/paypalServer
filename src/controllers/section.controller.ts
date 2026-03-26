@@ -53,6 +53,22 @@ export const createSection = async (req: Request, res: Response) => {
   }
 };
 
+export const createFromTemplate = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.body;
+    const section = await sectionService.createFromTemplate(type);
+    res.status(201).json({
+      success: true,
+      data: section,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to create section from template",
+    });
+  }
+};
+
 export const updateSection = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

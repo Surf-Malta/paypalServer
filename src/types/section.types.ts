@@ -11,7 +11,8 @@ export type SectionType =
   | 'testimonials' 
   | 'faq' 
   | 'get-started'
-  | 'footer';
+  | 'footer'
+  | 'custom-layout';
 
 export interface Section {
   id: string;

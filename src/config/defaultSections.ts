@@ -329,5 +329,33 @@ export const initialSections: CreateSectionDto[] = [
       },
       copyright: "© 2026 Surf. All rights reserved."
     }
+  },
+  {
+    type: "custom-layout",
+    name: "Custom Layout",
+    order: 10,
+    isActive: true,
+    content: {
+      blocks: [
+        {
+          type: "heading",
+          text: "Design Your Own Section",
+          style: "text-4xl md:text-5xl font-extrabold text-center",
+          color: "text-gray-900"
+        },
+        {
+          type: "text",
+          text: "This is a custom layout where you can add, remove, and arrange blocks of content to create a completely unique UI.",
+          style: "text-lg text-center max-w-2xl mx-auto",
+          color: "text-gray-600"
+        },
+        {
+          type: "button",
+          text: "Get Started Now",
+          url: "/register",
+          style: "bg-blue-600 text-white font-bold rounded-xl px-8 py-4 mx-auto block w-fit"
+        }
+      ]
+    }
   }
 ];
