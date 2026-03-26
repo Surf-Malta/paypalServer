@@ -5,6 +5,7 @@ import { corsMiddleware } from './middleware/cors.middleware';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import paymentRoutes from './routes/payment.routes';
 import registrationRoutes from './routes/registration.routes';
+import sectionRoutes from './routes/section.routes';
 import { config, isDevelopment } from './config/env.config';
 import { getPayPalEnvironment } from './config/paypal.config';
 
@@ -65,6 +66,7 @@ app.get('/', (req: Request, res: Response) => {
 // API Routes
 app.use('/api/payments', paymentRoutes);
 app.use('/api/registration', registrationRoutes);
+app.use('/api/sections', sectionRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
