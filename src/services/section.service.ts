@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { Section, SectionType, CreateSectionDto, UpdateSectionDto } from "../types/section.types";
-import { initialSections } from "../config/defaultSections";
+import { initialSections, sectionTemplates } from "../config/defaultSections";
 
 /**
  * Section Service
@@ -131,7 +131,7 @@ class SectionService {
    */
   async createFromTemplate(type: SectionType): Promise<Section> {
     await this.init();
-    const template = initialSections.find((s) => s.type === type);
+    const template = sectionTemplates.find((s) => s.type === type);
     if (!template) {
       throw new Error(`Template not found for type: ${type}`);
     }
@@ -166,7 +166,7 @@ class SectionService {
     }
 
     const section = this.sections[index];
-    const defaultSection = initialSections.find((s) => s.type === section.type);
+    const defaultSection = sectionTemplates.find((s) => s.type === section.type);
     
     if (!defaultSection) {
       throw new Error(`No default content found for section type: ${section.type}`);

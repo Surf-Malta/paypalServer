@@ -1,6 +1,6 @@
 import { CreateSectionDto } from "../types/section.types";
 
-export const initialSections: CreateSectionDto[] = [
+export const sectionTemplates: CreateSectionDto[] = [
   {
     type: "hero",
     name: "Hero Section",
@@ -359,3 +359,6 @@ export const initialSections: CreateSectionDto[] = [
     }
   }
 ];
+
+// Seed data should only be the core site structure
+export const initialSections = sectionTemplates.filter(s => s.type !== 'custom-layout');
