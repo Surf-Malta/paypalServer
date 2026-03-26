@@ -18,6 +18,7 @@ const corsOptions: cors.CorsOptions = {
         config.cors.allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`CORS REJECTION: Origin "${origin}" is not in whitelist:`, config.cors.allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
