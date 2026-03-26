@@ -346,5 +346,56 @@
     },
     "createdAt": "2026-03-26T19:03:59.140Z",
     "updatedAt": "2026-03-26T19:03:59.140Z"
+  },
+  {
+    "id": "b0999091-0d48-455a-8275-d7b36bfb595e",
+    "type": "custom-layout",
+    "name": "Custom Layout (New)",
+    "order": 9,
+    "isActive": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "Design Your Own Section",
+          "style": "text-4xl md:text-5xl font-extrabold text-center",
+          "color": "text-gray-900",
+          "id": "id-1774557916394-0",
+          "x": 0,
+          "y": 0,
+          "w": 400,
+          "zIndex": 0
+        },
+        {
+          "type": "text",
+          "text": "This is a custom layout where you can add, remove, and arrange blocks of content to create a completely unique UI.",
+          "style": "text-lg text-center max-w-2xl mx-auto",
+          "color": "text-gray-600",
+          "id": "id-1774557916394-1",
+          "x": 10,
+          "y": 100,
+          "w": 400,
+          "zIndex": 1
+        },
+        {
+          "type": "button",
+          "text": "Get Started Now",
+          "url": "/register",
+          "style": "bg-blue-600 text-white font-bold rounded-xl px-8 py-4 mx-auto block w-fit",
+          "id": "id-1774557916394-2",
+          "x": 20,
+          "y": 200,
+          "w": 400,
+          "zIndex": 2
+        }
+      ],
+      "settings": {
+        "padding": "medium",
+        "theme": "light",
+        "canvasHeight": 146
+      }
+    },
+    "createdAt": "2026-03-26T20:45:16.344Z",
+    "updatedAt": "2026-03-26T20:46:59.434Z"
   }
 ]
