@@ -13,12 +13,22 @@ const corsOptions: cors.CorsOptions = {
       return callback(null, true);
     }
 
+    // Normalize origin by removing trailing slash
+    const normalizedOrigin = origin.replace(/\/$/, "");
+
     // Check if origin is in allowed list
-    if (config.cors.allowedOrigins.includes('*') || 
-        config.cors.allowedOrigins.includes(origin)) {
+    const isAllowed = config.cors.allowedOrigins.some(allowed => {
+      // Strip potential key prefix "ALLOWED_ORIGINS=" and trailing slashes
+      const normalizedAllowed = allowed
+        .replace(/^ALLOWED_ORIGINS=/, "")
+        .replace(/\/$/, "");
+      return normalizedAllowed === "*" || normalizedAllowed === normalizedOrigin;
+    });
+
+    if (isAllowed) {
       callback(null, true);
     } else {
-      console.error(`CORS REJECTION: Origin "${origin}" is not in whitelist:`, config.cors.allowedOrigins);
+      console.error(`CORS REJECTION: Normalized Origin "${normalizedOrigin}" is not in whitelist:`, config.cors.allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
