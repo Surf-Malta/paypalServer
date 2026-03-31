@@ -56,7 +56,7 @@ export const config: EnvConfig = {
   cors: {
     allowedOrigins: getEnvVarOptional(
       "ALLOWED_ORIGINS",
-      "http://localhost:3000,http://localhost:5173,https://surf-seller-page-admin-panel.vercel.app,https://surf-seller-page.vercel.app,https://sell.surf.mt"
+      "http://localhost:3000,http://localhost:5173,https://surf-seller-page-admin-panel.vercel.app,https://surf-seller-page.vercel.app,https://sell.surf.mt,https://surf-seller-page-kappa.vercel.app"
     )
       .split(",")
       .map((origin) => origin.trim()),
